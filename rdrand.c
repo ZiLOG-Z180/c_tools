@@ -47,3 +47,9 @@ uint16_t seed16()
     assert(v > 0);
     return v;
 }
+
+void rand_arr(uint64_t *r, const uint8_t S)
+{
+    for (int8_t i = 0; i < S; i++)
+        r[i] = rand64();
+}

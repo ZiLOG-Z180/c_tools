@@ -28,3 +28,5 @@ uint64_t seed64(void);
 uint32_t seed32(void);
 
 uint16_t seed16(void);
+
+void rand_arr(uint64_t *r, const uint8_t S);
