@@ -3,9 +3,9 @@
 /* i = a[i] > 0 */
 uint8_t lsr_mpi(const mpi_t a)
 {
-    int8_t i = 0;
+    uint8_t i = 0;
 
-    for (; i < PRCS; i++)
+    for (; i < (uint8_t)PRCS; i++)
         if (a[i] > 0)
             break;
 
@@ -24,7 +24,7 @@ uint16_t bsr_mpi(const mpi_t a)
 /* v = a[S] > b[S] */
 uint8_t cmp_mpi(const mpi_t a, const mpi_t b)
 {
-    for (int8_t i = 0; i < PRCS; i++)
+    for (uint8_t i = 0; i < (uint8_t)PRCS; i++)
     {
         if (a[i] > b[i])
             return GT;
@@ -59,6 +59,6 @@ void sr_mpi(mpi_t a, const uint8_t S)
 /* r[S] = a[S] */
 void cp_arr(mpi_t r, const mpi_t a, const uint8_t S)
 {
-    for (int8_t i = 0; i < S; i++)
+    for (uint8_t i = 0; i < S; i++)
         r[i] = a[i];
 }

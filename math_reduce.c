@@ -30,7 +30,7 @@ uint8_t sub_mpi(mpx_t *m)
                  "movq %%rax, -8(%0, %%rcx, 8)\n\t"
                  "loop 1b"
                  :
-                 : "r"(v1), "r"(v2), "r"(v3), "n"(PRCS)
+                 : "r"(v1), "r"(v2), "r"(v3), "n"((uint8_t)PRCS)
                  : "rax", "rcx", "cc");
 
     cp_mpi(m->r, tr);
@@ -72,7 +72,7 @@ uint8_t div_mpi(mpx_t *m)
                  "loop 1b\n\t"
                  "movq %%rdx, (%1)"
                  :
-                 : "r"(v1), "r"(v2), "r"(v3), "r"(v4), "n"(PRCS)
+                 : "r"(v1), "r"(v2), "r"(v3), "r"(v4), "n"((uint8_t)PRCS)
                  : "rax", "rdx", "rcx", "r11", "cc");
 
     cp_mpi(m->r, tr);

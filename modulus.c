@@ -1,10 +1,9 @@
 #include <mpmath.h>
 
-static const mpr_t _mx = {MODULUS};
-
 /* a = a mod MODULUS */
 void mod_mpi(mpi_t a)
 {
+    static const mpr_t _mx = {MODULUS};
     mpi_t mx = (mpi_t)&_mx;
     uint8_t cmp = cmp_mpi(a, mx);
 
