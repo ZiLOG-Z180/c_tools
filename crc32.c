@@ -12,32 +12,25 @@
 */
 #include <stdint.h>
 /* SSE4.2 */
-/* return CRC32 of string s */
-/* CPU instruction uses different inputs to the CRC32 algorithm (known as the polynomial) which is apparently more
-   robust and is used in networks, filesystems, that sort of thing. It gives different results to the "standard"
-   polynomial, typically used in compression. */
-/* https://github.com/robn/crc32-bench */
-uint32_t crc32(const uint32_t _crc, const void *s, const uint32_t l)
+/* poly: 0x11EDC6F41 */
+uint32_t _crc32(const uint32_t _crc, const uint8_t *s, const uint32_t N)
 {
-    register uint32_t crc = _crc;
-    register uint32_t lq = l / 4;
-    register uint8_t lr = l % 4;
+    register uint64_t crc = (uint64_t)_crc;
+    register uint32_t nq = N / 8;
+    register uint8_t nr = N % 8;
 
-    if (lq)
-    {
+    if (nq)
         asm volatile("movl %2, %%ecx\n\t"
                      "xorl %%r11d, %%r11d\n\t"
                      "1:\n\t"
-                     "crc32l (%1, %%r11, 4), %0\n\t"
-                     "incb %%r11b\n\t"
+                     "crc32q (%1, %%r11, 8), %0\n\t"
+                     "incq %%r11\n\t"
                      "loop 1b"
                      : "+r"(crc)
-                     : "r"(s), "r"(lq)
+                     : "r"(s), "r"(nq)
                      : "rcx", "r11");
-    }
 
-    if (lr)
-    {
+    if (nr)
         asm volatile("movzbq %2, %%rcx\n\t"
                      "xorl %%r11d, %%r11d\n\t"
                      "1:\n\t"
@@ -45,9 +38,8 @@ uint32_t crc32(const uint32_t _crc, const void *s, const uint32_t l)
                      "incb %%r11b\n\t"
                      "loop 1b"
                      : "+r"(crc)
-                     : "r"(s + lq * 4), "r"(lr)
+                     : "r"(s + nq * 8), "r"(nr)
                      : "rcx", "r11");
-    }
 
-    return crc;
+    return (uint32_t)crc;
 }
