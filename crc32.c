@@ -13,14 +13,14 @@
 #include <stdint.h>
 /* SSE4.2 */
 /* poly: 0x11EDC6F41 */
-uint32_t _crc32(const uint32_t _crc, const uint8_t *s, const uint32_t N)
+uint32_t _crc32c(const uint32_t _crc, const uint8_t *s, const uint64_t N)
 {
-    register uint64_t crc = (uint64_t)_crc;
-    register uint32_t nq = N / 8;
+    register uint64_t crc = (uint64_t)~_crc;
+    register uint64_t nq = N / 8;
     register uint8_t nr = N % 8;
 
     if (nq)
-        asm volatile("movl %2, %%ecx\n\t"
+        asm volatile("movq %2, %%rcx\n\t"
                      "xorl %%r11d, %%r11d\n\t"
                      "1:\n\t"
                      "crc32q (%1, %%r11, 8), %0\n\t"
@@ -41,5 +41,5 @@ uint32_t _crc32(const uint32_t _crc, const uint8_t *s, const uint32_t N)
                      : "r"(s + nq * 8), "r"(nr)
                      : "rcx", "r11");
 
-    return (uint32_t)crc;
+    return ~(uint32_t)crc;
 }
