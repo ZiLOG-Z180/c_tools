@@ -24,7 +24,7 @@
                  "cmovncl %%ecx, %%eax\n\t"                                                                            \
                  "2:"                                                                                                  \
                  : "=r"(v)                                                                                             \
-                 : "n"((uint8_t)RC)                                                                                    \
+                 : "n"(RC)                                                                                             \
                  : "rcx", "cc")
 
 uint64_t rand64(void);

@@ -19,7 +19,7 @@ uint8_t add_mpi(mpx_t *m)
                  "loop 1b\n\t"
                  "cmovcw %%cx, %0"
                  : "+r"(of)
-                 : "r"(v1), "r"(v2), "r"(v3), "n"((uint8_t)PRCS)
+                 : "r"(v1), "r"(v2), "r"(v3), "n"(PRCS)
                  : "rax", "rcx", "cc");
 
     cp_mpi(m->r, tr);
@@ -56,7 +56,7 @@ uint8_t mul_mpi(mpx_t *m)
                  "adcq %%rax, -8(%0, %%rcx, 8)\n\t"
                  "loop 1b\n\t"
                  :
-                 : "r"(v1), "r"(v2), "r"(v3), "n"((uint8_t)PRCS)
+                 : "r"(v1), "r"(v2), "r"(v3), "n"(PRCS)
                  : "rax", "rdx", "rcx", "r11", "cc");
 
     cp_mpi(m->r, &tr[1]);

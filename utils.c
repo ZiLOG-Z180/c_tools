@@ -5,7 +5,7 @@ uint8_t lsr_mpi(const mpi_t a)
 {
     uint8_t i = 0;
 
-    for (; i < (uint8_t)PRCS; i++)
+    for (; i < PRCS; i++)
         if (a[i] > 0)
             break;
 
@@ -24,7 +24,7 @@ uint16_t bsr_mpi(const mpi_t a)
 /* v = a[S] > b[S] */
 uint8_t cmp_mpi(const mpi_t a, const mpi_t b)
 {
-    for (uint8_t i = 0; i < (uint8_t)PRCS; i++)
+    for (uint8_t i = 0; i < PRCS; i++)
     {
         if (a[i] > b[i])
             return GT;
