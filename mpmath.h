@@ -34,7 +34,7 @@
                  : "r"(r), "r"(a)                                                                                      \
                  : "ymm8", "ymm9")
 
-#define PRCS 8                               // precision
+#define PRCS 8                               // precision (1 : 255)
 #define MODULUS 0, 0, 0, 0, -1, -1, -1, -977 // secp256k1
 /* --- end 8 --- */
 
